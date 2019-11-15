@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,9 +11,12 @@ namespace OregonHikes.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()    //view for the home page
+        public IActionResult Index()    //using ViewBag and ViewData to send info from controller to index view
         {
-            return View();
+            List<Hike> hikes = Repository.Hikes;        
+            ViewData["newestHike"] = hikes[hikes.Count - 1].TrailName;  //the hikes sort by region before this is figured out, screwing up the newest hike!
+            ViewBag.hikeCount = hikes.Count;
+            return View(hikes);
         }
 
         public IActionResult About()    //view for the about/history page
@@ -20,42 +24,77 @@ namespace OregonHikes.Controllers
             return View("About");
         }
 
-        [HttpGet]
-        public ViewResult ReviewForm()     //default constructor
+        public IActionResult AddHike()
         {
-            return View("ReviewForm");
+            return View();
         }
-        //overloaded constructor
+
         [HttpPost]
-        public ViewResult ReviewForm(UserReviews userReviews)   //adds a review to the list, thanks the user
+        public RedirectToActionResult AddHike(string trailName, string region, string description)
         {
-            Repository.AddResponse(userReviews);
-            return View("Submitted", userReviews);
+            Hike hike = new Hike { TrailName = trailName, Region = region, Description = description };
+            Repository.AddHike(hike);
+
+            return RedirectToAction("Hikes");
+        }
+       
+        public IActionResult ReviewForm(string trailName)
+        {
+            return View("ReviewForm", HttpUtility.HtmlDecode(trailName));
         }
 
-        public ViewResult HikeReviews()     
+        [HttpPost]
+        public RedirectToActionResult ReviewForm(string trailName, string userName, string review)
         {
-            return View(Repository.reviews);
-        }
-
-        public IActionResult Contact()      //view for the contact page
+            Hike hike = Repository.GetHikeByTrailName(trailName);
+            UserReview userReview = new UserReview { Review = review};
+            hike.UserReviews.Add(userReview);
+            
+            return RedirectToAction("Hikes");
+        }       
+        /*
+        [HttpGet]
+        public ViewResult Contact()     //default constructor
         {
             return View("Contact");
         }
 
-        public ViewResult Resources()       //view for the resources page
+        //overloaded constructor    
+        
+        [HttpPost]
+        public RedirectToActionResult Contact(string userName, string email, string messageText)
         {
-            return View("Resources");
+            Contact message = new Contact { UserName = userName, Email = email, MessageText = messageText };            
+            Repository.AddContactMessage(message);     
+            return RedirectToAction("Submessage");
+        }
+        //I can't figure out how to get a dateTime assigned to a message when its sent!
+        
+        public IActionResult Messages()
+        {
+            //List<Contact> messages = Repository.Messages;          
+            //messages.Sort((m1, m2) => dateTime.Compare(m1.WhenSent, m2.WhenSent, DateTimeComparison.Ordinal));
+            return View("Messages");
+        }
+        
+        public IActionResult SubMessage()      //view for the submessage page
+        {
+            return View("SubMessage");
+        }      
+        */
+
+        public IActionResult People()
+        {
+            List<Person> people = Repository.People;
+            people.Sort((p1, p2) => string.Compare(p1.PeopleName, p2.PeopleName, StringComparison.Ordinal));
+            return View(people);
         }
 
-        public ViewResult Books()       //view for the print resources page
+        public IActionResult Hikes()        // see if the name change messes it up!
         {
-            return View("Books");
-        }
-
-        public ViewResult Links()       //view for the online resources pages
-        {
-            return View("Links");
+            List<Hike> hikes = Repository.Hikes;
+            hikes.Sort((h1, h2) => string.Compare(h1.Region, h2.Region, StringComparison.Ordinal));
+            return View(hikes);
         }
 
         public IActionResult Privacy()      //view for the default privacy page

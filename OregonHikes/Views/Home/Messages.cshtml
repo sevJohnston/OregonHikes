@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OregonHikes.Models.Contact>
+@{
+    Layout = "_NewLayout";
+    ViewData["Title"] = "Messages";
+}
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="panel-body">
+        <h1>@ViewData["Title"]</h1>
+
+        <table class="table table-sm table-responsive table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                    <th>User Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Contact m in Model)
+                {
+                    <tr>
+                        <td>@m.UserName</td>
+                        <td>@m.Email</td>
+                        <td>@m.MessageText</td>
+                    </tr>
+                    
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+
+</body>

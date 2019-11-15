@@ -1,16 +1,36 @@
 ﻿@{
+    Layout = "_NewLayout";
     ViewData["Title"] = "Oregon Hikes";
+
 }
 
-<div class="text-center">
-    <div class="jumbotron">
-        <h1 class="display-4">Oregon Hikes</h1>
-        <p>Get out and enjoy your state</p>
+<body>
 
-        <a asp-action="About">Click me to learn more about Oregon Hikes <br /></a>
-        <a asp-action="Resources">Click me for more information on hiking in Oregon <br /></a>
-        <a asp-action="ReviewForm">Click me to submit a hike review <br /></a>
-        <a asp-action="HikeReviews">Click me to browse user hike reviews <br /></a>
+    <div class="text-center">
+        <div class="jumbotron">
+            <h1 class="display-4">@ViewData["Title"]</h1>
 
+            <h3>Get out and enjoy your state</h3>
+        </div>
     </div>
-</div>
+    
+    <div class="container">
+        <div class="page-header">
+            <a asp-action="DemoIndex">Click me for Demo Index ViewResult test <br /></a>
+            <a asp-action="StringDemo">Click me for StringDemo test <br /></a>
+            <a asp-action="ResultDemo">Click me for JsonResult test <br /></a>
+            <a asp-action="DemoTest">Click me for ContentResult test <br /></a>
+            <a asp-action="RedirectDemo">Click me for RedirectDemo test <br /></a>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h3>Site Stats:</h3>
+            <h4>Number of Hikes: @ViewBag.hikeCount</h4>
+            <h4>Newest Hike: <i>@ViewData["newestHike"]</i></h4>
+        </div>
+    </div>
+
+</body>

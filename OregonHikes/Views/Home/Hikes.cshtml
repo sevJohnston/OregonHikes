@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OregonHikes.Models.Hike>
+
+@{
+    Layout = "_NewLayout";
+    ViewData["Title"] = "Hikes and Trail Reviews";
+}
+
+<body>
+    <div class="panel-body">
+        <h1>@ViewData["Title"]</h1>
+
+        <table class="table table-sm table-responsive table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>TrailName</th>
+                    <th>Region</th>
+                    <th>Description</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Hike h in Model)
+                {
+                    <tr>
+                        <td>@h.TrailName</td>
+                        <td>@h.Region</td>
+                        <td>@h.Description</td>
+                    </tr>
+                    <tr>                        
+                        <th><a asp-action="ReviewForm" asp-route-trailName="@h.TrailName">Add a review</a></th>
+                        
+                        @if (h.UserReviews.Count > 0)
+                        {
+                            @foreach (UserReview r in h.UserReviews)
+                            {
+                                <td>@r.Review</td> 
+                            }                            
+                        }
+                    </tr>
+                 }
+
+
+            </tbody>
+            </table>
+    </div>
+
+</body>
+
+

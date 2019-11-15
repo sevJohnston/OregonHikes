@@ -1,7 +1,32 @@
-﻿@model OregonHikes.Models.UserReviews;
-@*
+﻿@model String
+@{ 
+    Layout = "_FormLayout";
     ViewData["Title"] = "Review a Hike";
-*@
-<h1>Review a Hike</h1>
-<p>Fill out the form below to add a hike review here.</p>
-<p>ToDo: review form here</p>
+}
+
+   
+    <body>
+        
+                <h1>@ViewData["Title"]</h1>
+                <p>Review for <em>@Model</em></p>
+
+                <form asp-action="ReviewForm" method="post">
+                    <div asp-validation-summary="All"></div>
+                    <input type="hidden" name="trailName" value="@Model" />
+                    <div class="form-group">
+                        <label for="UserName">Your Name:</label>
+                        <input class="form-control" for="UserName" name="userName"/>
+                    </div>                                       
+                    <div class="form-group">
+                        <label for="Review">Your Review:</label>
+                        <input class="form-control" for="Review" name="review"/>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit">Submit Review</button>
+                    </div>
+                </form>
+           
+
+</body>
+
+
