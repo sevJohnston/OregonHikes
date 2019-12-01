@@ -6,11 +6,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OregonHikes.Models;
+using OregonHikes.Repositories;
 
 namespace OregonHikes.Controllers
 {
     public class HomeController : Controller
     {
+        IHikeRepository repo;
+        public HomeController(IHikeRepository r)
+        {
+            repo = r;
+        }
+
         public IActionResult Index()    //using ViewBag and ViewData to send info from controller to index view
         {
             List<Hike> hikes = Repository.Hikes;        
@@ -52,36 +59,6 @@ namespace OregonHikes.Controllers
             
             return RedirectToAction("Hikes");
         }       
-        /*
-        [HttpGet]
-        public ViewResult Contact()     //default constructor
-        {
-            return View("Contact");
-        }
-
-        //overloaded constructor    
-        
-        [HttpPost]
-        public RedirectToActionResult Contact(string userName, string email, string messageText)
-        {
-            Contact message = new Contact { UserName = userName, Email = email, MessageText = messageText };            
-            Repository.AddContactMessage(message);     
-            return RedirectToAction("Submessage");
-        }
-        //I can't figure out how to get a dateTime assigned to a message when its sent!
-        
-        public IActionResult Messages()
-        {
-            //List<Contact> messages = Repository.Messages;          
-            //messages.Sort((m1, m2) => dateTime.Compare(m1.WhenSent, m2.WhenSent, DateTimeComparison.Ordinal));
-            return View("Messages");
-        }
-        
-        public IActionResult SubMessage()      //view for the submessage page
-        {
-            return View("SubMessage");
-        }      
-        */
 
         public IActionResult People()
         {

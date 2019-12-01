@@ -1,26 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using OregonHikes.Models;
 
 namespace OregonHikes.Repositories
 {
     public class HikeRepository : IHikeRepository
     {
-
         private static List<Hike> hikes = new List<Hike>();    //creates a list for hikes
         public List<Hike> Hikes { get { return hikes; } } //not sure whether I still need this?
-        
-        /*
-        public static IEnumerable<Hike> Hike
-        {
-            get
-            {
-                return hikes;
-            }
-        }
-*/
 
         public  HikeRepository()
         {
@@ -30,12 +17,10 @@ namespace OregonHikes.Repositories
             }          
         }
 
-
         public void AddHike(Hike hike)
         {
             hikes.Add(hike);
         }
-
 
         public Hike GetHikeByRegion(string region)
         {
@@ -49,7 +34,6 @@ namespace OregonHikes.Repositories
             return hike;
         }
 
-
         static void AddHikeSeedData()
         {
             Hike hike = new Hike()
@@ -59,9 +43,9 @@ namespace OregonHikes.Repositories
                 Description = "A wonderful example of a temperate rain forest " +
                 "with views to the ocean from the top!"
             };
-            UserReview review = new UserReview();
+            //UserReview review = new UserReview();
             hikes.Add(hike);
-            hike.UserReviews.Add(review);
+            //hike.UserReviews.Add(review);
             hike = new Hike()
             {
                 TrailName = "Cook's Ridge",
@@ -70,7 +54,7 @@ namespace OregonHikes.Repositories
                 "near Cape Perpetua and Cumming's Creek."
             };
             hikes.Add(hike);
-            hike.UserReviews.Add(review);
+            //hike.UserReviews.Add(review);
 
             hike = new Hike()
             {
@@ -80,8 +64,7 @@ namespace OregonHikes.Repositories
                 "and takes you to a double waterfall. A popular hike for kids."
             };
             hikes.Add(hike);
-            hike.UserReviews.Add(review);
-
+            //hike.UserReviews.Add(review);
         }
     }
 }
