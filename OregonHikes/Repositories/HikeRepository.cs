@@ -1,13 +1,23 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using OregonHikes.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace OregonHikes.Repositories
 {
     public class HikeRepository : IHikeRepository
     {
+        private AppDbContext context;
+
         private static List<Hike> hikes = new List<Hike>();    //creates a list for hikes
-        public List<Hike> Hikes { get { return hikes; } } //not sure whether I still need this?
+        //public List<Hike> Hikes { get { return hikes; } } //not sure whether I still need this?
+        public List<Hike> Hikes { get { return context.Hikes.ToList(); } }
+
+        //constructor
+        public HikeRepository(AppDbContext appDbContext)
+        {
+            context = appDbContext;
+        }
 
         public  HikeRepository()
         {
@@ -17,21 +27,38 @@ namespace OregonHikes.Repositories
             }          
         }
 
+        //adding the hike to dB
+        public void AddHike(Hike hike)
+        {
+            context.Hikes.Add(hike);
+            context.SaveChanges();
+        }
+        /*
         public void AddHike(Hike hike)
         {
             hikes.Add(hike);
         }
+        */
 
         public Hike GetHikeByRegion(string region)
         {
-            Hike hike = hikes.Find(h => h.Region == region);
+            Hike hike;
+            hike = context.Hikes.First(h => h.Region == region);
             return hike;
         }
 
         public Hike GetHikeByTrailName(string trailName)
         {
-            Hike hike = hikes.Find(h => h.TrailName == trailName);
+            Hike hike;  
+            hike = context.Hikes.First(h => h.TrailName == trailName);
             return hike;
+        }
+
+        public void AddReview(Hike hike, UserReview review)
+        {
+            hike.UserReviews.Add(review);
+            context.Hikes.Update(hike);
+            context.SaveChanges();
         }
 
         static void AddHikeSeedData()

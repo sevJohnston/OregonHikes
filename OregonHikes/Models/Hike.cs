@@ -9,7 +9,7 @@ namespace OregonHikes.Models
     {
         private List<Hike> hikes = new List<Hike>();
         private List<UserReview> reviews = new List<UserReview>();
-        
+        public int HikeID { get; set; }     //creates a HikeID and maps it as the primary key
         public string TrailName { get; set; }        
         public string Region { get; set; }       
         public string Description { get; set; }

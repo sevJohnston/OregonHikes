@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OregonHikes.Repositories;
@@ -34,7 +35,11 @@ namespace OregonHikes
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // Inject our repositories into our controllers
             services.AddTransient<IHikeRepository, HikeRepository>();
+            //specify DbContext and ConnectionString
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+                Configuration["Data:OregonHikes:ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
