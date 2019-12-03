@@ -39,7 +39,7 @@ namespace OregonHikes
             services.AddTransient<IHikeRepository, HikeRepository>();
             //specify DbContext and ConnectionString
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
-                Configuration["Data:OregonHikes:ConnectionString"])); //look at Brian's
+                Configuration["ConnectionStrings:SanConnectionString"])); //look at Brian's
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
