@@ -11,14 +11,15 @@ namespace OregonHikes.Repositories
 
         private static List<Hike> hikes = new List<Hike>();    //creates a list for hikes
         //public List<Hike> Hikes { get { return hikes; } } //not sure whether I still need this?
-        public List<Hike> Hikes { get { return context.Hikes.ToList(); } }
+        public List<Hike> Hikes { get { return context.Hikes.Include(h => h.UserReviews).ToList(); } }
+        //public List<Hike> Hikes { get { return context.Hikes.Include("UserReviews").ToList(); } }
 
         //constructor
         public HikeRepository(AppDbContext appDbContext)
         {
             context = appDbContext;
         }
-
+        /* Calling Seed (method in SeedData.cs) instead in StartUp.cs
         public  HikeRepository()
         {
             if (hikes.Count == 0)
@@ -26,7 +27,7 @@ namespace OregonHikes.Repositories
                 AddHikeSeedData();
             }          
         }
-
+        */
         //adding the hike to dB
         public void AddHike(Hike hike)
         {
@@ -60,7 +61,7 @@ namespace OregonHikes.Repositories
             context.Hikes.Update(hike);
             context.SaveChanges();
         }
-
+        /* taking this out and using SeedData.cs in Repositories-- call to Seed in StartUp.cs
         static void AddHikeSeedData()
         {
             Hike hike = new Hike()
@@ -93,5 +94,6 @@ namespace OregonHikes.Repositories
             hikes.Add(hike);
             //hike.UserReviews.Add(review);
         }
+        */
     }
 }

@@ -12,10 +12,7 @@ namespace OregonHikes.Repositories
         public static void Seed(AppDbContext context)
         {
             if (!context.Hikes.Any())
-            {
-                //Author author = new Author { Name = "Samuel Shellabarger" };
-                //context.Authors.Add(author);
-
+            {               
                 User user = new User { UserName = "Bob Johnston" };
                 context.Users.Add(user);
 

@@ -8,6 +8,7 @@ namespace OregonHikes.Repositories
     {
         List<Hike> Hikes { get; }
         void AddHike(Hike hike);
+        void AddReview(Hike hike, UserReview review);
         Hike GetHikeByTrailName(string trailName);
         Hike GetHikeByRegion(string region);
     }

@@ -23,6 +23,11 @@ namespace OregonHikes.Repositories
             hikes.Add(hike);
         }
 
+        public void AddReview(Hike hike, UserReview review)
+        {
+            hike.UserReviews.Add(review);          
+        }
+
         public Hike GetHikeByRegion(string region)
         {
             Hike hike = hikes.Find(h => h.Region == region);
@@ -34,6 +39,8 @@ namespace OregonHikes.Repositories
             Hike hike = hikes.Find(h => h.TrailName == trailName);
             return hike;
         }
+
+
 
         static void AddHikeTestData()
         {

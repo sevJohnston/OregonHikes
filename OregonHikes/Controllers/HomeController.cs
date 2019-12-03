@@ -49,7 +49,7 @@ namespace OregonHikes.Controllers
         {
             return View("ReviewForm", HttpUtility.HtmlDecode(trailName));
         }
-
+        /*
         [HttpPost]
         public RedirectToActionResult ReviewForm(string trailName, string userName, string review)
         {
@@ -59,6 +59,20 @@ namespace OregonHikes.Controllers
             
             return RedirectToAction("Hikes");
         }       
+        */
+
+        [HttpPost]
+        public RedirectToActionResult ReviewForm(string trailName, string userName, string review)
+        {
+            Hike hike = repo.GetHikeByTrailName(trailName);
+            repo.AddReview(hike,
+                new UserReview()
+                {
+                    UserName = new User(),
+                    Review = review
+                });
+            return RedirectToAction("Hikes");
+        }
 
         public IActionResult People()
         {
@@ -85,5 +99,7 @@ namespace OregonHikes.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
+
+    }       
+    
 }
